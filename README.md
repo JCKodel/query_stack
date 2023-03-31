@@ -232,7 +232,6 @@ class DevelopmentEnvironment extends Environment {
 So, for your production environment, all you need to do is to override those settings:
 
 ```dart
-```dart
 @immutable
 class ProductionEnvironment extends DevelopmentEnvironment {
   const ProductionEnvironment();
