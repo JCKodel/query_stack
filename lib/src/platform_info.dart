@@ -53,74 +53,90 @@ class PlatformInfo {
 /// The app is running as a native app in one of these OSes or is Flutter Web?
 enum NativePlatform {
   /// Android phone or tablet
-  android,
+  android(singleLetterName: "A"),
 
   /// iPhone or iPad
-  ios,
+  ios(singleLetterName: "I"),
 
   /// Windows machine
-  windows,
+  windows(singleLetterName: "W"),
 
   /// MacOS machine
-  macos,
+  macos(singleLetterName: "M"),
 
   /// Linux machine
-  linux,
+  linux(singleLetterName: "L"),
 
   /// Flutter web
-  web,
+  web(singleLetterName: "B"),
 
   /// Unable to determine the native platform
-  unknown,
+  unknown(singleLetterName: "X");
+
+  const NativePlatform({required this.singleLetterName});
+
+  final String singleLetterName;
 }
 
 /// The design system used by the platform host
 enum PlatformDesignSystem {
   /// Android or Linux
-  materialDesign,
+  materialDesign(singleLetterName: "M"),
 
   /// MacOS, iPhone or iPad
-  appleHumanIntercace,
+  appleHumanIntercace(singleLetterName: "A"),
 
   /// Windows machine
-  fluentDesign,
+  fluentDesign(singleLetterName: "F"),
 
   /// Unable to determine the host or design system
-  unknown,
+  unknown(singleLetterName: "U");
+
+  const PlatformDesignSystem({required this.singleLetterName});
+
+  final String singleLetterName;
 }
 
 /// After considering `PlatformMedia`, which host is running the app?
 enum PlatformHost {
   /// Android phone or tablet
-  android,
+  android(singleLetterName: "A"),
 
   /// iPhone or iPad
-  ios,
+  ios(singleLetterName: "I"),
 
   /// Windows machine
-  windows,
+  windows(singleLetterName: "W"),
 
   /// MacOS machine
-  macos,
+  macos(singleLetterName: "M"),
 
   /// Linux machine
-  linux,
+  linux(singleLetterName: "L"),
 
   /// Unable to determine the host
-  unknown,
+  unknown(singleLetterName: "U");
+
+  const PlatformHost({required this.singleLetterName});
+
+  final String singleLetterName;
 }
 
 /// What kind of platform the app is running?
 enum PlatformMedia {
   /// App running on a web browser (Flutter Web)
-  web,
+  web(singleLetterName: "W"),
 
   /// App running on a native desktop enviroment (Windows, Linux or MacOS)
-  desktop,
+  desktop(singleLetterName: "D"),
 
   /// App running on a mobile device (Android or iOS)
-  mobile,
+  mobile(singleLetterName: "M"),
 
   /// Could not determine the media
-  unknown,
+  unknown(singleLetterName: "U");
+
+  const PlatformMedia({required this.singleLetterName});
+
+  final String singleLetterName;
 }
