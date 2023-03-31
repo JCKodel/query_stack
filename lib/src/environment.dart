@@ -218,10 +218,10 @@ abstract class Environment {
       return;
     }
 
-    final queryKeyString = queryKey.toString();
+    final queryKeyString = queryKey._key;
 
     for (final entry in queryStreams.entries) {
-      final match = isSpecificKey ? entry.key.toString() == queryKeyString : entry.key.toString().startsWith(queryKeyString);
+      final match = isSpecificKey ? entry.key._key == queryKeyString : entry.key._key.startsWith(queryKeyString);
 
       if (match) {
         final queryStream = _getQueryStream<T>(entry.key);
@@ -261,16 +261,18 @@ abstract class Environment {
     final queryKeyString = queryKey.toString();
 
     for (final entry in _queryStreams.entries) {
-      final match = isSpecificKey ? entry.key.toString() == queryKeyString : entry.key.toString().startsWith(queryKeyString);
+      for (final query in entry.value.entries) {
+        final match = isSpecificKey ? query.key._key == queryKeyString : query.key._key.startsWith(queryKeyString);
 
-      if (match) {
-        final dynamic queryStream = entry.value;
+        if (match) {
+          final dynamic queryStream = query.value;
 
-        if (queryStream.hasValue == true) {
-          final match = isStaleOnly ? queryStream.value.isStale == true : true;
+          if (queryStream.hasValue == true) {
+            final match = isStaleOnly ? queryStream.value.isStale == true : true;
 
-          if (match) {
-            queryStream.value.startFetching(keepPreviousData);
+            if (match) {
+              queryStream.value.startFetching(keepPreviousData);
+            }
           }
         }
       }

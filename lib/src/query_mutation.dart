@@ -334,10 +334,6 @@ class Query<T> extends BaseQueryMutation<T> {
   }
 
   Future<Query<T>> startFetching(bool keepPreviousData) async {
-    if (isStale == false) {
-      return this;
-    }
-
     final busyQuery = _setLoading(keepPreviousData);
     final queryStream = Environment._getQueryStream<T>(busyQuery.queryKey);
 
