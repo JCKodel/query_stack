@@ -14,3 +14,7 @@
 
 * Added `singleLetterName` to all `PlatformInfo` enums to facilitate safer serialization.
 * Added `StackTrace` info in errors
+
+## 1.0.0-dev.5
+
+* Fix project availability for Windows, Linux, MacOS, iOS, Android and Web.
