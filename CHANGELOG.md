@@ -18,3 +18,8 @@
 ## 1.0.0-dev.5
 
 * Fix project availability for Windows, Linux, MacOS, iOS, Android and Web.
+
+## 1.0.0-dev.6
+
+* Added `T when<T>()` on any enum of `PlatformInfo`
+* Added `PlatformInfo` into `registerDependencies` so dependencies can be injected based on the current platform.

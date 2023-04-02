@@ -30,7 +30,7 @@ abstract class Environment {
 
   /// This method should register all your dependencies.
   @protected
-  void registerDependencies(RegisterDependenciesDelegate when);
+  void registerDependencies(RegisterDependenciesDelegate when, PlatformInfo platformInfo);
 
   /// This method will be called during the `EnvironmentProvider`
   /// initialization, after the `registerDependencies`, so you

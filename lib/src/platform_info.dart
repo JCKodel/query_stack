@@ -96,6 +96,25 @@ enum NativePlatform {
       _kUnknownNativePlatform: NativePlatform.unknown,
     }[singleLetterName]!;
   }
+
+  T when<T>(T Function()? onAndroid, T Function()? oniOS, T Function()? onWindows, T Function()? onMacOS, T Function()? onLinux, T Function()? onWeb, T Function()? orElse) {
+    switch (this) {
+      case NativePlatform.android:
+        return (onAndroid ?? orElse)!();
+      case NativePlatform.ios:
+        return (oniOS ?? orElse)!();
+      case NativePlatform.windows:
+        return (onWindows ?? orElse)!();
+      case NativePlatform.macos:
+        return (onMacOS ?? orElse)!();
+      case NativePlatform.linux:
+        return (onLinux ?? orElse)!();
+      case NativePlatform.web:
+        return (onWeb ?? orElse)!();
+      case NativePlatform.unknown:
+        return orElse!();
+    }
+  }
 }
 
 const _kMaterialDesignPlatformDesignSystem = "M";
@@ -128,6 +147,19 @@ enum PlatformDesignSystem {
       _kFluentDesignPlatformDesignSystem: PlatformDesignSystem.fluentDesign,
       _kUnknownPlatformDesignSystem: PlatformDesignSystem.unknown,
     }[singleLetterName]!;
+  }
+
+  T when<T>(T Function()? onMaterialDesign, T Function()? onAppleHumanInterface, T Function()? onFluentDesign, T Function()? orElse) {
+    switch (this) {
+      case PlatformDesignSystem.materialDesign:
+        return (onMaterialDesign ?? orElse)!();
+      case PlatformDesignSystem.appleHumanInterface:
+        return (onAppleHumanInterface ?? orElse)!();
+      case PlatformDesignSystem.fluentDesign:
+        return (onFluentDesign ?? orElse)!();
+      case PlatformDesignSystem.unknown:
+        return orElse!();
+    }
   }
 }
 
@@ -172,6 +204,23 @@ enum PlatformHost {
       _kUnknownPlatformHost: PlatformHost.unknown,
     }[singleLetterName]!;
   }
+
+  T when<T>(T Function()? onAndroid, T Function()? oniOS, T Function()? onWindows, T Function()? onMacOS, T Function()? onLinux, T Function()? orElse) {
+    switch (this) {
+      case PlatformHost.android:
+        return (onAndroid ?? orElse)!();
+      case PlatformHost.ios:
+        return (oniOS ?? orElse)!();
+      case PlatformHost.windows:
+        return (onWindows ?? orElse)!();
+      case PlatformHost.macos:
+        return (onMacOS ?? orElse)!();
+      case PlatformHost.linux:
+        return (onLinux ?? orElse)!();
+      case PlatformHost.unknown:
+        return orElse!();
+    }
+  }
 }
 
 const _kWebPlatformMedia = "W";
@@ -204,5 +253,18 @@ enum PlatformMedia {
       _kMobilePlatformMedia: PlatformMedia.mobile,
       _kUnknownPlatformMedia: PlatformMedia.unknown,
     }[singleLetterName]!;
+  }
+
+  T when<T>(T Function()? onWeb, T Function()? onDesktop, T Function()? onMobile, T Function()? orElse) {
+    switch (this) {
+      case PlatformMedia.web:
+        return (onWeb ?? orElse)!();
+      case PlatformMedia.desktop:
+        return (onDesktop ?? orElse)!();
+      case PlatformMedia.mobile:
+        return (onMobile ?? orElse)!();
+      case PlatformMedia.unknown:
+        return orElse!();
+    }
   }
 }

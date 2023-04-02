@@ -40,7 +40,7 @@ class _EnvironmentProviderState extends State<EnvironmentProvider> {
   }
 
   Future<void> _initializeEnvironment() async {
-    widget.environment.registerDependencies(Environment._when);
+    widget.environment.registerDependencies(Environment._when, Environment._platformInfo);
     await widget.environment.initializeAsync(Environment._use);
 
     if (widget.onInitialized != null) {
