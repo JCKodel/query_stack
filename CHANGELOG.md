@@ -13,3 +13,4 @@
 ## 1.0.0-dev.4
 
 * Added `singleLetterName` to all `PlatformInfo` enums to facilitate safer serialization.
+* Added `StackTrace` info in errors

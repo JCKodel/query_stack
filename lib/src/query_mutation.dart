@@ -6,6 +6,7 @@ abstract class BaseQueryMutation<T> implements IEquatable {
     T? data,
     DateTime? dataUpdatedAt,
     Object? error,
+    StackTrace? stackTrace,
     DateTime? errorUpdatedAt,
     required int failureCount,
     required int maxAttempts,
@@ -19,6 +20,7 @@ abstract class BaseQueryMutation<T> implements IEquatable {
         _data = data,
         _dataUpdatedAt = dataUpdatedAt,
         _error = error,
+        _stackTrace = stackTrace,
         _errorUpdatedAt = errorUpdatedAt,
         _failureCount = failureCount,
         _maxAttempts = maxAttempts,
@@ -40,6 +42,9 @@ abstract class BaseQueryMutation<T> implements IEquatable {
 
   final Object? _error;
   Object? get error => _error;
+
+  final StackTrace? _stackTrace;
+  StackTrace? get stackTrace => _stackTrace;
 
   final DateTime? _errorUpdatedAt;
   DateTime? get errorUpdatedAt => _errorUpdatedAt;
@@ -176,6 +181,7 @@ class Query<T> extends BaseQueryMutation<T> {
     super.data,
     super.dataUpdatedAt,
     super.error,
+    super.stackTrace,
     super.errorUpdatedAt,
     required super.failureCount,
     required super.maxAttempts,
@@ -287,13 +293,14 @@ class Query<T> extends BaseQueryMutation<T> {
     );
   }
 
-  Query<T> _setError(Object exception) {
-    Log.error(Query<T>, exception);
+  Query<T> _setError(Object exception, StackTrace? stackTrace) {
+    Log.error(Query<T>, exception, stackTrace);
 
     return Query<T>(
       data: data,
       dataUpdatedAt: dataUpdatedAt,
       error: exception,
+      stackTrace: stackTrace,
       errorUpdatedAt: DateTime.now(),
       failureCount: failureCount + 1,
       hasRun: true,
@@ -351,12 +358,12 @@ class Query<T> extends BaseQueryMutation<T> {
       final successQuery = busyQuery._setSuccess(await fetchedData, data);
 
       return _addQuery<T>(queryStream, successQuery);
-    } catch (ex) {
+    } catch (ex, stackTrace) {
       if (kDebugMode) {
         debugger(message: ex.toString());
       }
 
-      final errorQuery = busyQuery._setError(ex);
+      final errorQuery = busyQuery._setError(ex, stackTrace);
 
       if (errorQuery.failureCount < errorQuery.maxAttempts) {
         await Future<void>.delayed(errorQuery.retryDelay);
@@ -393,6 +400,7 @@ class Mutation<T> extends BaseQueryMutation<T> {
     super.data,
     super.dataUpdatedAt,
     super.error,
+    super.stackTrace,
     super.errorUpdatedAt,
     required super.failureCount,
     required super.maxAttempts,
@@ -466,8 +474,8 @@ class Mutation<T> extends BaseQueryMutation<T> {
     );
   }
 
-  Mutation<T> _setError(Object exception) {
-    Log.error(Mutation<T>, exception);
+  Mutation<T> _setError(Object exception, StackTrace? stackTrace) {
+    Log.error(Mutation<T>, exception, stackTrace);
 
     return Mutation<T>(
       failureCount: failureCount + 1,
@@ -483,6 +491,7 @@ class Mutation<T> extends BaseQueryMutation<T> {
       data: data,
       dataUpdatedAt: dataUpdatedAt,
       error: exception,
+      stackTrace: stackTrace,
       errorUpdatedAt: DateTime.now(),
     );
   }
@@ -531,12 +540,12 @@ class Mutation<T> extends BaseQueryMutation<T> {
       Environment._setCachedData<T>(successMutation.queryKey, awaitedFetchedData, false);
 
       return _addMutation<T>(mutationStream, successMutation);
-    } catch (ex) {
+    } catch (ex, stackTrace) {
       if (kDebugMode) {
         debugger(message: ex.toString());
       }
 
-      final errorMutation = busyMutation._setError(ex);
+      final errorMutation = busyMutation._setError(ex, stackTrace);
 
       if (errorMutation.failureCount < errorMutation.maxAttempts) {
         await Future<void>.delayed(errorMutation.retryDelay);

@@ -26,7 +26,7 @@ abstract class Log {
     );
   }
 
-  static void error(Type name, Object exception) {
+  static void error(Type name, Object exception, [StackTrace? stackTrace]) {
     log(
       "${_white}${DateTime.now().toIso8601String()} ${_red}Error${_resetColor}",
       name: name.toString(),
@@ -39,6 +39,14 @@ abstract class Log {
         name: name.toString(),
         time: DateTime.now(),
       );
+
+      if (stackTrace != null) {
+        log(
+          "${_yellow}${stackTrace}${_resetColor}",
+          name: name.toString(),
+          time: DateTime.now(),
+        );
+      }
     }
   }
 
