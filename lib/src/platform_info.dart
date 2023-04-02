@@ -97,7 +97,25 @@ enum NativePlatform {
     }[singleLetterName]!;
   }
 
-  T when<T>(T Function()? onAndroid, T Function()? oniOS, T Function()? onWindows, T Function()? onMacOS, T Function()? onLinux, T Function()? onWeb, T Function()? orElse) {
+  T when<T>({
+    T Function()? onAndroid,
+    T Function()? oniOS,
+    T Function()? onWindows,
+    T Function()? onMacOS,
+    T Function()? onLinux,
+    T Function()? onWeb,
+    T Function()? orElse,
+  }) {
+    if (onAndroid == null && oniOS == null && onWindows == null && onMacOS == null && onLinux == null && onWeb == null) {
+      throw UnsupportedError("At least one NativePlatform should be provided");
+    }
+
+    if (onAndroid == null || oniOS == null || onWindows == null || onMacOS == null || onLinux == null || onWeb == null) {
+      if (orElse == null) {
+        throw UnsupportedError("If not all NativePlatforms are provided, orElse should be provided");
+      }
+    }
+
     switch (this) {
       case NativePlatform.android:
         return (onAndroid ?? orElse)!();
@@ -149,7 +167,22 @@ enum PlatformDesignSystem {
     }[singleLetterName]!;
   }
 
-  T when<T>(T Function()? onMaterialDesign, T Function()? onAppleHumanInterface, T Function()? onFluentDesign, T Function()? orElse) {
+  T when<T>({
+    T Function()? onMaterialDesign,
+    T Function()? onAppleHumanInterface,
+    T Function()? onFluentDesign,
+    T Function()? orElse,
+  }) {
+    if (onMaterialDesign == null && onAppleHumanInterface == null && onFluentDesign == null) {
+      throw UnsupportedError("At least one PlatformDesignSystem should be provided");
+    }
+
+    if (onMaterialDesign == null || onAppleHumanInterface == null || onFluentDesign == null) {
+      if (orElse == null) {
+        throw UnsupportedError("If not all PlatformDesignSystems are provided, orElse should be provided");
+      }
+    }
+
     switch (this) {
       case PlatformDesignSystem.materialDesign:
         return (onMaterialDesign ?? orElse)!();
@@ -205,7 +238,24 @@ enum PlatformHost {
     }[singleLetterName]!;
   }
 
-  T when<T>(T Function()? onAndroid, T Function()? oniOS, T Function()? onWindows, T Function()? onMacOS, T Function()? onLinux, T Function()? orElse) {
+  T when<T>({
+    T Function()? onAndroid,
+    T Function()? oniOS,
+    T Function()? onWindows,
+    T Function()? onMacOS,
+    T Function()? onLinux,
+    T Function()? orElse,
+  }) {
+    if (onAndroid == null && oniOS == null && onWindows == null && onMacOS == null && onLinux == null) {
+      throw UnsupportedError("At least one PlatformHost should be provided");
+    }
+
+    if (onAndroid == null || oniOS == null || onWindows == null || onMacOS == null || onLinux == null) {
+      if (orElse == null) {
+        throw UnsupportedError("If not all PlatformHosts are provided, orElse should be provided");
+      }
+    }
+
     switch (this) {
       case PlatformHost.android:
         return (onAndroid ?? orElse)!();
@@ -255,7 +305,22 @@ enum PlatformMedia {
     }[singleLetterName]!;
   }
 
-  T when<T>(T Function()? onWeb, T Function()? onDesktop, T Function()? onMobile, T Function()? orElse) {
+  T when<T>({
+    T Function()? onWeb,
+    T Function()? onDesktop,
+    T Function()? onMobile,
+    T Function()? orElse,
+  }) {
+    if (onWeb == null && onDesktop == null && onMobile == null) {
+      throw UnsupportedError("At least one PlatformMedia should be provided");
+    }
+
+    if (onWeb == null || onDesktop == null || onMobile == null) {
+      if (orElse == null) {
+        throw UnsupportedError("If not all PlatformMedias are provided, orElse should be provided");
+      }
+    }
+
     switch (this) {
       case PlatformMedia.web:
         return (onWeb ?? orElse)!();

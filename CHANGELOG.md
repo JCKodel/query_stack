@@ -21,5 +21,8 @@
 
 ## 1.0.0-dev.6
 
-* Added `T when<T>()` on any enum of `PlatformInfo`
 * Added `PlatformInfo` into `registerDependencies` so dependencies can be injected based on the current platform.
+
+## 1.0.0-dev.7
+
+* Added `T when<T>()` on any enum of `PlatformInfo`
