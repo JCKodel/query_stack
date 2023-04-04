@@ -281,7 +281,7 @@ class Query<T> extends BaseQueryMutation<T> {
       failureCount: failureCount,
       hasRun: hasRun,
       isBusy: keepPreviousData ? false : true,
-      isError: isError,
+      isError: keepPreviousData ? isError : false,
       isPreviousData: isPreviousData,
       isRunning: true,
       isSuccess: keepPreviousData ? isSuccess : false,
@@ -359,10 +359,6 @@ class Query<T> extends BaseQueryMutation<T> {
 
       return _addQuery<T>(queryStream, successQuery);
     } catch (ex, stackTrace) {
-      if (kDebugMode) {
-        debugger(message: ex.toString());
-      }
-
       final errorQuery = busyQuery._setError(ex, stackTrace);
 
       if (errorQuery.failureCount < errorQuery.maxAttempts) {
@@ -541,10 +537,6 @@ class Mutation<T> extends BaseQueryMutation<T> {
 
       return _addMutation<T>(mutationStream, successMutation);
     } catch (ex, stackTrace) {
-      if (kDebugMode) {
-        debugger(message: ex.toString());
-      }
-
       final errorMutation = busyMutation._setError(ex, stackTrace);
 
       if (errorMutation.failureCount < errorMutation.maxAttempts) {

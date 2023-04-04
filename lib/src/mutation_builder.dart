@@ -14,8 +14,8 @@ class MutationBuilder<TData> extends StatelessWidget {
 
   final QueryKey queryKey;
   final Widget Function(BuildContext context, Mutation<TData> mutation) builder;
-  final void Function(TData? data)? onSuccess;
-  final void Function(Object error)? onError;
+  final void Function(Mutation<TData> mutation)? onSuccess;
+  final void Function(Mutation<TData> mutation)? onError;
   final void Function(Mutation<TData> mutation)? onSettled;
   final int maxAttempts;
   final Duration retryDelay;
@@ -79,7 +79,7 @@ class MutationBuilder<TData> extends StatelessWidget {
               Log.error(MutationBuilder<TData>, snapshot.data!.error!);
 
               if (onError != null) {
-                WidgetsBinding.instance.addPostFrameCallback((_) => onError!(snapshot.data!.error!));
+                WidgetsBinding.instance.addPostFrameCallback((_) => onError!(snapshot.data!));
               }
 
               if (onSettled != null) {
@@ -90,7 +90,7 @@ class MutationBuilder<TData> extends StatelessWidget {
               Log.success(MutationBuilder<TData>, snapshot.data!.data);
 
               if (onSuccess != null) {
-                WidgetsBinding.instance.addPostFrameCallback((_) => onSuccess!(snapshot.data!.data));
+                WidgetsBinding.instance.addPostFrameCallback((_) => onSuccess!(snapshot.data!));
               }
 
               if (onSettled != null) {

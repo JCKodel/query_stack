@@ -30,3 +30,11 @@
 ## 1.0.0-dev.8
 
 * Fix `isStale` when fetching is retried
+
+## 1.0.0-dev.9
+
+* Fix `isError` when fetching is retried
+
+## 1.0.0-dev.10
+
+* BREAKING CHANGE: now `QueryBuilder` and `MutationBuilder` methods `onSuccess`, `onError` and `onSettled` will receive the `Query<T>` or `Mutation<T>` instead of a `T` for success and `Object` for error.

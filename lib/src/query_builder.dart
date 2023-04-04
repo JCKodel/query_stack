@@ -27,8 +27,8 @@ class QueryBuilder<TData> extends StatefulWidget {
   final Duration staleDuration;
   final bool keepPreviousData;
   final TData? placeholderData;
-  final void Function(TData? data)? onSuccess;
-  final void Function(Object error)? onError;
+  final void Function(Query<TData> result)? onSuccess;
+  final void Function(Query<TData> result)? onError;
   final void Function(Query<TData> result)? onSettled;
 
   final Duration? refetchInterval;
@@ -190,8 +190,8 @@ class _QueryBuilder<TData> extends StatelessWidget {
   final int maxAttempts;
   final Duration retryDelay;
   final Duration staleDuration;
-  final void Function(TData? data)? onSuccess;
-  final void Function(Object error)? onError;
+  final void Function(Query<TData> result)? onSuccess;
+  final void Function(Query<TData> result)? onError;
   final void Function(Query<TData> result)? onSettled;
   final bool keepPreviousData;
   final TData? placeholderData;
@@ -242,7 +242,7 @@ class _QueryBuilder<TData> extends StatelessWidget {
               Log.error(QueryBuilder<TData>, snapshot.data!.error!);
 
               if (onError != null) {
-                WidgetsBinding.instance.addPostFrameCallback((_) => onError!(snapshot.data!.error!));
+                WidgetsBinding.instance.addPostFrameCallback((_) => onError!(snapshot.data!));
               }
 
               if (onSettled != null) {
@@ -252,7 +252,7 @@ class _QueryBuilder<TData> extends StatelessWidget {
             case QueryStatus.empty:
             case QueryStatus.success:
               if (onSuccess != null) {
-                WidgetsBinding.instance.addPostFrameCallback((_) => onSuccess!(snapshot.data!.data));
+                WidgetsBinding.instance.addPostFrameCallback((_) => onSuccess!(snapshot.data!));
               }
 
               if (onSettled != null) {
