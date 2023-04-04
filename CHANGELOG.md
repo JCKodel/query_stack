@@ -26,3 +26,7 @@
 ## 1.0.0-dev.7
 
 * Added `T when<T>()` on any enum of `PlatformInfo`
+
+## 1.0.0-dev.8
+
+* Fix `isStale` when fetching is retried

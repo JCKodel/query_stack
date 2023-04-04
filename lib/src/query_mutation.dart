@@ -284,7 +284,7 @@ class Query<T> extends BaseQueryMutation<T> {
       isError: isError,
       isPreviousData: isPreviousData,
       isRunning: true,
-      isSuccess: isSuccess,
+      isSuccess: keepPreviousData ? isSuccess : false,
       maxAttempts: maxAttempts,
       queryKey: queryKey,
       refetch: refetch,
