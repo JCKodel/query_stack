@@ -38,3 +38,7 @@
 ## 1.0.0-dev.10
 
 * BREAKING CHANGE: now `QueryBuilder` and `MutationBuilder` methods `onSuccess`, `onError` and `onSettled` will receive the `Query<T>` or `Mutation<T>` instead of a `T` for success and `Object` for error.
+
+## 1.0.0-dev.11
+
+* Better initialization rendering.

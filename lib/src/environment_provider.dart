@@ -42,10 +42,6 @@ class _EnvironmentProviderState extends State<EnvironmentProvider> {
   Future<void> _initializeEnvironment() async {
     widget.environment.registerDependencies(Environment._when, Environment._platformInfo);
     await widget.environment.initializeAsync(Environment._use);
-
-    if (widget.onInitialized != null) {
-      widget.onInitialized!();
-    }
   }
 
   @override
@@ -54,7 +50,11 @@ class _EnvironmentProviderState extends State<EnvironmentProvider> {
       future: _environmentFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const SizedBox();
+          return const MaterialApp(home: Scaffold());
+        }
+
+        if (widget.onInitialized != null) {
+          widget.onInitialized!();
         }
 
         return _EnvironmentStateProvider(
