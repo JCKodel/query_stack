@@ -8,4 +8,13 @@ part of query_stack;
 /// otherwise, your QueryBuilder will not update after a
 /// navigation pop.
 @immutable
-class EnvironmentProviderRouteObserver extends RouteObserver {}
+class EnvironmentProviderRouteObserver extends RouteObserver {
+  @override
+  void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    if (route is ModalRoute) {
+      return;
+    }
+
+    super.didPop(route, previousRoute);
+  }
+}

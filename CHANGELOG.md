@@ -42,3 +42,7 @@
 ## 1.0.0-dev.11
 
 * Better initialization rendering.
+
+## 1.0.0-dev.12
+
+* Avoiding QueryBuilder rebuild when popping modal routes.
