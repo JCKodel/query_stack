@@ -10,28 +10,40 @@ abstract class Log {
   static const _cyan = "\x1B[36m";
   static const _white = "\x1B[37m";
 
-  static void idle(Type name) {
+  static String? _lastEntry;
+
+  static bool _writeLog(Type name, QueryKey queryKey, String color, String message, [Object? data]) {
+    message = "${_cyan}${queryKey} ${color}${message}";
+
+    final key = "${message};${data}";
+
+    if (key == _lastEntry) {
+      return false;
+    }
+
+    _lastEntry = key;
+
     log(
-      "${_white}${DateTime.now().toIso8601String()} ${_magenta}Idle${_resetColor}",
+      "${_white}${DateTime.now().toIso8601String()} ${message}${_resetColor}",
       name: name.toString(),
       time: DateTime.now(),
     );
+
+    return true;
   }
 
-  static void busy(Type name) {
-    log(
-      "${_white}${DateTime.now().toIso8601String()} ${_blue}Busy${_resetColor}",
-      name: name.toString(),
-      time: DateTime.now(),
-    );
+  static void idle(Type name, QueryKey queryKey) {
+    _writeLog(name, queryKey, _magenta, "Idle");
   }
 
-  static void error(Type name, Object exception, [StackTrace? stackTrace]) {
-    log(
-      "${_white}${DateTime.now().toIso8601String()} ${_red}Error${_resetColor}",
-      name: name.toString(),
-      time: DateTime.now(),
-    );
+  static void busy(Type name, QueryKey queryKey) {
+    _writeLog(name, queryKey, _blue, "Busy");
+  }
+
+  static void error(Type name, QueryKey queryKey, Object exception, [StackTrace? stackTrace]) {
+    if (_writeLog(name, queryKey, _red, "Error", exception) == false) {
+      return;
+    }
 
     if (kDebugMode) {
       log(
@@ -50,12 +62,10 @@ abstract class Log {
     }
   }
 
-  static void success(Type name, dynamic data, [bool? isPreviousData]) {
-    log(
-      "${_white}${DateTime.now().toIso8601String()} ${_green}Success${_resetColor}",
-      name: name.toString(),
-      time: DateTime.now(),
-    );
+  static void success(Type name, QueryKey queryKey, dynamic data, [bool? isPreviousData]) {
+    if (_writeLog(name, queryKey, _green, "Success", data) == false) {
+      return;
+    }
 
     if (kDebugMode) {
       log(

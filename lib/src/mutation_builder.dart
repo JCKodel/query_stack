@@ -65,18 +65,12 @@ class MutationBuilder<TData> extends StatelessWidget {
       ),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          Log.error(MutationBuilder<TData>, snapshot.error!);
+          Log.error(MutationBuilder<TData>, queryKey, snapshot.error!);
           throw snapshot.error!;
         } else {
           switch (snapshot.data!.status) {
-            case MutationStatus.idle:
-              Log.idle(MutationBuilder<TData>);
-              break;
-            case MutationStatus.mutating:
-              Log.busy(MutationBuilder<TData>);
-              break;
             case MutationStatus.error:
-              Log.error(MutationBuilder<TData>, snapshot.data!.error!);
+              Log.error(MutationBuilder<TData>, queryKey, snapshot.data!.error!);
 
               if (onError != null) {
                 WidgetsBinding.instance.addPostFrameCallback((_) => onError!(snapshot.data!));
@@ -87,8 +81,6 @@ class MutationBuilder<TData> extends StatelessWidget {
               }
               break;
             case MutationStatus.success:
-              Log.success(MutationBuilder<TData>, snapshot.data!.data);
-
               if (onSuccess != null) {
                 WidgetsBinding.instance.addPostFrameCallback((_) => onSuccess!(snapshot.data!));
               }
@@ -98,6 +90,7 @@ class MutationBuilder<TData> extends StatelessWidget {
               }
 
               break;
+            default:
           }
         }
 

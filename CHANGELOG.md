@@ -46,3 +46,8 @@
 ## 1.0.0-dev.12
 
 * Avoiding QueryBuilder rebuild when popping modal routes.
+
+## 1.0.0-dev.13
+
+* Added `setCachedData<T>` on mutation, so it is now possible to invalidate the current query key for different return types.
+* Improvements in log

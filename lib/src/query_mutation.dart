@@ -271,7 +271,7 @@ class Query<T> extends BaseQueryMutation<T> {
   }
 
   Query<T> _setLoading(bool keepPreviousData) {
-    Log.busy(Query<T>);
+    Log.busy(Query<T>, queryKey);
 
     return Query<T>(
       data: keepPreviousData ? data : null,
@@ -294,7 +294,7 @@ class Query<T> extends BaseQueryMutation<T> {
   }
 
   Query<T> _setError(Object exception, StackTrace? stackTrace) {
-    Log.error(Query<T>, exception, stackTrace);
+    Log.error(Query<T>, queryKey, exception, stackTrace);
 
     return Query<T>(
       data: data,
@@ -318,7 +318,7 @@ class Query<T> extends BaseQueryMutation<T> {
   }
 
   Query<T> _setSuccess(T? data, T? oldData) {
-    Log.success(Query<T>, data, data == oldData);
+    Log.success(Query<T>, queryKey, data, data == oldData);
 
     return Query<T>(
       data: data,
@@ -450,7 +450,7 @@ class Mutation<T> extends BaseQueryMutation<T> {
   }
 
   Mutation<T> _setMutating() {
-    Log.busy(Mutation<T>);
+    Log.busy(Mutation<T>, queryKey);
 
     return Mutation<T>(
       failureCount: failureCount,
@@ -471,7 +471,7 @@ class Mutation<T> extends BaseQueryMutation<T> {
   }
 
   Mutation<T> _setError(Object exception, StackTrace? stackTrace) {
-    Log.error(Mutation<T>, exception, stackTrace);
+    Log.error(Mutation<T>, queryKey, exception, stackTrace);
 
     return Mutation<T>(
       failureCount: failureCount + 1,
@@ -493,7 +493,7 @@ class Mutation<T> extends BaseQueryMutation<T> {
   }
 
   Mutation<T> _setSuccess(T? data) {
-    Log.success(Mutation<T>, data);
+    Log.success(Mutation<T>, queryKey, data);
 
     return Mutation<T>(
       failureCount: 0,
@@ -555,5 +555,9 @@ class Mutation<T> extends BaseQueryMutation<T> {
     }
 
     return mutation;
+  }
+
+  void setCachedData<TData>(TData data) {
+    Environment._setCachedData<TData>(queryKey, data, false);
   }
 }

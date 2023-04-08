@@ -229,17 +229,11 @@ class _QueryBuilder<TData> extends StatelessWidget {
       stream: queryStream.stream,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          Log.error(QueryBuilder<TData>, snapshot.error!);
+          Log.error(QueryBuilder<TData>, queryKey, snapshot.error!);
         } else {
           switch (snapshot.data!.status) {
-            case QueryStatus.idle:
-              Log.idle(QueryBuilder<TData>);
-              break;
-            case QueryStatus.loading:
-              Log.busy(QueryBuilder<TData>);
-              break;
             case QueryStatus.error:
-              Log.error(QueryBuilder<TData>, snapshot.data!.error!);
+              Log.error(QueryBuilder<TData>, queryKey, snapshot.data!.error!);
 
               if (onError != null) {
                 WidgetsBinding.instance.addPostFrameCallback((_) => onError!(snapshot.data!));
@@ -258,9 +252,8 @@ class _QueryBuilder<TData> extends StatelessWidget {
               if (onSettled != null) {
                 WidgetsBinding.instance.addPostFrameCallback((_) => onSettled!(snapshot.data!));
               }
-
-              Log.success(QueryBuilder<TData>, snapshot.data!.data);
               break;
+            default:
           }
         }
 
