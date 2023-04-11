@@ -88,7 +88,7 @@ abstract class Environment {
   Future<Query<T>> query<T>(
     QueryKey queryKey,
     FutureOr<T?> Function(UseDelegate use) queryFn, {
-    int maxAttempts = 3,
+    int maxAttempts = kDebugMode ? 1 : 3,
     Duration retryDelay = const Duration(seconds: 1),
     Duration staleDuration = const Duration(seconds: 3),
   }) async {

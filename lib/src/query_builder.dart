@@ -5,7 +5,7 @@ class QueryBuilder<TData> extends StatefulWidget {
     required this.queryKey,
     required this.queryFn,
     required this.builder,
-    this.maxAttempts = 3,
+    this.maxAttempts = kDebugMode ? 1 : 3,
     this.retryDelay = const Duration(seconds: 1),
     this.staleDuration = const Duration(seconds: 3),
     this.refetchInterval,
