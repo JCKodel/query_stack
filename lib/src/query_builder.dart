@@ -119,6 +119,10 @@ class _QueryBuilderState<TData> extends State<QueryBuilder<TData>> with WidgetsB
   }
 
   void _refetchIfStale() {
+    if (ModalRoute.of(context)?.isCurrent ?? false == false) {
+      return;
+    }
+
     final queryStream = Environment._getQueryStream<TData>(widget.queryKey);
 
     if (queryStream.hasValue && queryStream.value.isStale) {
