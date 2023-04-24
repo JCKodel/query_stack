@@ -280,7 +280,7 @@ class FirstAccessQuery extends StatelessWidget {
   // Each query must have a key, so I can access them later to
   // make it refresh (for instance: after setuping my first company
   // I can trigger a refetch on this widget manually)
-  static const List<Object> queryKey = [FirstAccessQuery];
+  static final String queryKey = "${FirstAccessQuery}";
 
   // I just wrap a `QueryFutureBuilder<Response>` so I don't
   // repeat myself in the future and keep all things related

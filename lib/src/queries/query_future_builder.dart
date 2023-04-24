@@ -1,17 +1,17 @@
 part of query_stack;
 
 @immutable
-class Query<T> extends InheritedModel<List<Object>> {
+class Query<T> extends InheritedModel<String> {
   const Query({super.key, required this.queryKey, required this.refreshFn, required super.child});
 
-  final List<Object> queryKey;
+  final String queryKey;
   final void Function([bool keepPreviousData]) refreshFn;
 
-  static Query<T>? maybeOf<T>(BuildContext context, List<Object> queryKey) {
+  static Query<T>? maybeOf<T>(BuildContext context, String queryKey) {
     return InheritedModel.inheritFrom<Query<T>>(context, aspect: queryKey);
   }
 
-  static Query<T> of<T>(BuildContext context, List<Object> queryKey) {
+  static Query<T> of<T>(BuildContext context, String queryKey) {
     final result = maybeOf<T>(context, queryKey);
 
     assert(result != null, "Unable to find an instance of Query in the widget tree");
@@ -25,7 +25,7 @@ class Query<T> extends InheritedModel<List<Object>> {
   }
 
   @override
-  bool updateShouldNotifyDependent(Query<T> oldWidget, Set<List<Object>> dependencies) {
+  bool updateShouldNotifyDependent(Query<T> oldWidget, Set<String> dependencies) {
     return false;
   }
 }
@@ -54,7 +54,7 @@ class QueryFutureBuilder<T> extends StatefulWidget {
     super.key,
   });
 
-  final List<Object> queryKey;
+  final String queryKey;
   final Future<T?> Function() future;
   final T? initialData;
   final void Function(BuildContext context, Object error)? onError;
