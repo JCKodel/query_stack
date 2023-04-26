@@ -2,10 +2,19 @@ part of query_stack;
 
 @immutable
 class Query<T> extends InheritedModel<String> {
-  const Query({super.key, required this.queryKey, required this.refreshFn, required super.child});
+  const Query({
+    super.key,
+    required String queryKey,
+    required void Function([bool keepPreviousData]) refreshFn,
+    required super.child,
+  })  : _queryKey = queryKey,
+        _refreshFn = refreshFn;
 
-  final String queryKey;
-  final void Function([bool keepPreviousData]) refreshFn;
+  final String _queryKey;
+  final void Function([bool keepPreviousData]) _refreshFn;
+
+  @override
+  bool isSupportedAspect(Object aspect) => aspect is String && aspect == _queryKey;
 
   static Query<T>? maybeOf<T>(BuildContext context, String queryKey) {
     return InheritedModel.inheritFrom<Query<T>>(context, aspect: queryKey);
@@ -17,6 +26,10 @@ class Query<T> extends InheritedModel<String> {
     assert(result != null, "Unable to find an instance of Query in the widget tree");
 
     return result!;
+  }
+
+  void refresh([bool keepPreviousData = false]) {
+    _refreshFn(keepPreviousData);
   }
 
   @override
@@ -191,19 +204,25 @@ class _QueryFutureBuilderState<T> extends State<QueryFutureBuilder<T>> with Widg
 
         if (data == null || (data is Iterable && data.isEmpty)) {
           _streamController.add(EmptyResult<T>());
-        } else {
-          _streamController.add(DataResult<T>(data));
-        }
-        log(
-          "\x1B[32m${widget.runtimeType} has data\x1B[0m",
-          name: "QueryFutureBuilder<${T}>",
-        );
 
-        if (kDebugMode) {
           log(
-            "\x1B[37m${data}\x1B[0m",
+            "\x1B[33m${widget.runtimeType} is empty\x1B[0m",
             name: "QueryFutureBuilder<${T}>",
           );
+        } else {
+          _streamController.add(DataResult<T>(data));
+
+          log(
+            "\x1B[32m${widget.runtimeType} has data\x1B[0m",
+            name: "QueryFutureBuilder<${T}>",
+          );
+
+          if (kDebugMode) {
+            log(
+              "\x1B[37m${data}\x1B[0m",
+              name: "QueryFutureBuilder<${T}>",
+            );
+          }
         }
       },
     ).onError(

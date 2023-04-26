@@ -1,6 +1,6 @@
 name: query_stack
 description: Powerful, yet simple, asynchronous state management for Flutter
-version: 1.0.1
+version: 1.0.2
 homepage: https://github.com/JCKodel/query_stack
 
 environment:

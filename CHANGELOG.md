@@ -10,3 +10,8 @@
 
 * `queryKey` is now a String
 * Fixed pubspec info about supported platforms
+
+## 1.0.2
+
+* Fix logs
+* Fix queryKey search mechanism
