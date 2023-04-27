@@ -334,7 +334,14 @@ class _QueryFutureBuilderState<T> extends State<QueryFutureBuilder<T>> with Widg
         WidgetsBinding.instance.addPostFrameCallback((_) => widget.onWaiting!(context));
       }
 
-      return widget.waitingBuilder == null ? const Center(child: CircularProgressIndicator.adaptive()) : widget.waitingBuilder!(context);
+      return widget.waitingBuilder == null
+          ? const Center(
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: CircularProgressIndicator.adaptive(),
+              ),
+            )
+          : widget.waitingBuilder!(context);
     }
 
     if (snapshot.data is EmptyResult<T>) {

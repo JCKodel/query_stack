@@ -69,7 +69,14 @@ class QueryStreamBuilder<T> extends StatelessWidget {
         WidgetsBinding.instance.addPostFrameCallback((_) => onWaiting!(context));
       }
 
-      return waitingBuilder == null ? const Center(child: CircularProgressIndicator.adaptive()) : waitingBuilder!(context);
+      return waitingBuilder == null
+          ? const Center(
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: CircularProgressIndicator.adaptive(),
+              ),
+            )
+          : waitingBuilder!(context);
     }
 
     if (snapshot.data == null || (snapshot.data is Iterable && (snapshot.data as Iterable).isEmpty)) {
