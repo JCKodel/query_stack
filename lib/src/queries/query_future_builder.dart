@@ -160,13 +160,14 @@ class _QueryFutureBuilderState<T> extends State<QueryFutureBuilder<T>> with Widg
   }
 
   void _refetchIfStale() {
-    if (widget.refetchInterval == null || widget.refetchIntervalInBackground == false) {
+    if (_lastFetch != null && (widget.refetchInterval == null || widget.refetchIntervalInBackground == false)) {
       final isTopMost = ModalRoute.of(context)?.isCurrent ?? false;
       if (isTopMost == false || _isAlive == false) {
         log(
           "\x1B[35m${widget.runtimeType} is not top-most (${isTopMost}, ${_isAlive})\x1B[0m",
           name: "QueryFutureBuilder<${T}>",
         );
+
         return;
       }
     }
