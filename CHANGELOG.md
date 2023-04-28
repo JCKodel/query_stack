@@ -15,3 +15,7 @@
 
 * Fix logs
 * Fix queryKey search mechanism
+
+## 1.0.3
+
+* Minor fixes
