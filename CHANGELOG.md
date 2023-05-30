@@ -19,3 +19,11 @@
 ## 1.0.3
 
 * Minor fixes
+
+## 1.0.4
+
+* Removed SystemUI
+
+## 1.0.5
+
+* Updated dependencies
